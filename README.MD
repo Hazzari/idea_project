@@ -3,3 +3,6 @@
 Взято с сайта: [Pythonist.ru](https://pythonist.ru/idei-dlya-proektov-na-python-aktualnye-v-2020-godu/)
 
 1 - Игра угадай число
+
+2 - Симулятор игры в кости (асинхронный)
+    не доделан
