@@ -56,4 +56,3 @@ server.quit()
 
 # TODO: Добавить выбор smtp
 # TODO: Добавить ввод пароля
-# TODO: error
