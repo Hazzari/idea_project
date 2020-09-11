@@ -62,4 +62,4 @@ print('Искомое значение', item)
 
 a = binary_search(my_list, item)
 b = ind(my_list, item)
-print(a)
+
