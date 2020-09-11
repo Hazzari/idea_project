@@ -17,6 +17,8 @@ from dataclasses import dataclass
 import asyncio
 from random import randint
 
+from input_bones import get_bones
+
 
 @dataclass
 class Bone:
@@ -28,11 +30,11 @@ class Bone:
 
     async def bones_are_rolling(self, ):
         print(f'...кубик {self.__number} катится по игровому полю...')
-        await asyncio.sleep(randint(1, 3))
+        await asyncio.sleep(randint(1, 6))
 
     async def bones_show_the_result(self):
         print(f'Кубик {self.__number} остановился и выпало ---->>>> "{randint(1, 6)}"')
-        await asyncio.sleep(randint(1, 3))
+        await asyncio.sleep(randint(1, 5))
 
     async def main(self):
         await self.roll_the_bones()
@@ -40,36 +42,15 @@ class Bone:
         await self.bones_show_the_result()
 
 
-def __get_bones():
-    while True:
-        born_count = input('Сколько бросить кубиков? ( не больше 10 ) \n >>> ')
-        try:
-            if 0 < int(born_count) <= 10:
-                born_count = int(born_count)
-                break
-        except ValueError:
-            print('Не число')
-        except IndexError:
-            print("Не верное количество")
-
-    return born_count
-
-
 def app():
     while True:
-        bones_count = __get_bones()
-        bones = [Bone(task).main() for task in range(1, int(bones_count) + 1)]
+        bones_count = get_bones()
 
-        try:
-            loop = asyncio.new_event_loop()
-            task_count = [loop.create_task(task) for task in bones]
-            tasks = asyncio.wait(task_count)
-            loop.run_until_complete(tasks)
-        except Exception as e:
-            print('There was a problem:')
-            print(str(e))
-        finally:
-            loop.close()
+        bones = [Bone(c) for c in range(1, bones_count + 1)]
+
+        coros = [c.main() for c in bones]
+        coro = asyncio.wait(coros)
+        asyncio.run(coro)
 
         time.sleep(1)
         end_game = input("Играем?\n.... q для выхода\n>>> ")
